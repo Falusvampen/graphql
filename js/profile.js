@@ -3,6 +3,38 @@ function logout() {
   window.location.href = "login.html";
 }
 
+async function fetchTransactionData(jwt) {
+  const query = `
+  query {
+    transaction {
+      type
+      attrs
+      path
+      amount
+    }
+  }
+`;
+
+  try {
+    const response = await fetch(
+      "https://01.gritlab.ax/api/graphql-engine/v1/graphql",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${jwt}`,
+        },
+        body: JSON.stringify({ query }),
+      }
+    );
+
+    const data = await response.json();
+    return data.data.transaction;
+  } catch (error) {
+    console.error("Error fetching transaction data:", error);
+  }
+}
+
 async function fetchData() {
   const jwt = localStorage.getItem("jwt");
   if (!jwt) {
@@ -38,9 +70,33 @@ async function fetchData() {
     const user = data.data.user[0];
     displayUserInfo(user);
     // generateGraphs(user);
+
+    const transactions = await fetchTransactionData(jwt);
+    calculateTotalXP(transactions);
   } catch (error) {
     console.error("Error fetching data:", error);
   }
+}
+
+function calculateTotalXP(transactions) {
+  const filteredTransactions = transactions.filter((transaction) => {
+    return (
+      transaction.type === "xp" &&
+      transaction.path.startsWith("/gritlab/school-curriculum/")
+      // &&
+      // transaction.eventId !== null
+    );
+  });
+
+  const totalAmount = filteredTransactions.reduce(
+    (accumulator, transaction) => {
+      return accumulator + transaction.amount;
+    },
+    0
+  );
+
+  document.getElementById("total-xp").textContent =
+    convertToByteUnits(totalAmount);
 }
 
 function displayUserInfo(user) {
