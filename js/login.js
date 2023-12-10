@@ -68,7 +68,7 @@ document
         const jwt = data;
         console.log("Acquired JWT: " + jwt);
         localStorage.setItem("jwt", jwt);
-        window.location.href = "/profile.html";
+        window.location.href = "./profile.html";
       } else {
         Toastify({
           text: "Invalid credentials. Please try again.",

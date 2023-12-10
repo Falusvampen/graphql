@@ -1,27 +1,16 @@
 @import url(//db.onlinewebfonts.com/c/373efd69166d31c2b5052a505527acbf?family=Graphik-Medium);
-
 body {
   font-family: Graphik-Medium, sans-serif;
-
-  /* use a img as background */
   background-image: url("../flat/mosaic.jpeg");
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
-  /* center the image */
-
   align-items: center;
-  /* center items in the middle */
   display: flex;
-  /* flexbox all the way */
   justify-content: center;
-  /* center items horizontally, in this case */
   min-height: 100vh;
-  /* make sure it's at least as tall as the viewport */
   margin: 0;
-  /* no body margin */
   padding: 0;
-  /* no body padding */
 }
 
 .auth-form {
@@ -72,15 +61,8 @@ input[type="submit"] {
 input[type="submit"]:hover {
   background-color: #777;
 }
-/* 
-.notification {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  background-color: red;
-  color: white;
-  padding: 10px;
-  text-align: center;
-  display: none;
-} */
+
+#demo {
+  width: 100%;
+  margin-top: 10px;
+}
